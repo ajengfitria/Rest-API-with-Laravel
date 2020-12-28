@@ -166,4 +166,74 @@ Route::post('stuff/add','StuffController@insert_data_stuff');
 
 Terakhir, untuk menguji fungsi tersebut, kita perlu menggunakan Postman.
 
-Buka postman, lalu pilihkan
+Buka postman, lalu pilih POST dan pastekan url berikut
+```
+http://127.0.0.1:8000/api/stuff/add
+```
+
+# 3. PUT
+Tambahkan function pada StuffController untuk melakukan action put. Berikut kodenya
+```
+//function to put data from database
+    public function update_data_stuff(Request $request, $id) {
+    	$stuff_check = StuffModel::firstWhere('kode_barang', $id);
+    	if ($stuff_check) {
+    		$data_stuff = StuffModel::find($id);
+    		$data_stuff->nama_barang = $request->namaBarang;
+    		$data_stuff->merk = $request->merk;
+    		$data_stuff->stok = $request->stok;
+    		$data_stuff->save();
+
+    		return response([
+    			'status' => 'OK',
+    			'message' => 'Data berhasil diubah',
+    			'update-data' => $data_stuff], 200);
+    	} else {
+    		return response([
+    			'status' => 'Data not found',
+    			'message' => 'Kode tidak ditemukan'], 404);
+    	}
+    }
+```
+
+Kemudian tambahkan url. Buka folder routes->api.php lalu tambahkan kode berikut
+```
+Route::put('stuff/update/{kode_barang}','StuffController@update_data_stuff');
+```
+
+Terakhir, untuk menguji fungsi tersebut, kita perlu menggunakan Postman.
+
+Buka postman, lalu pilih PUT dan pastekan url berikut
+```
+http://127.0.0.1:8000/api/stuff/update/2
+```
+
+# 4. DELETE
+Tambahkan function pada StuffController untuk melakukan action delete. Berikut kodenya
+```
+//function to delete data
+    public function delete_data_stuff($id) {
+    	$stuff_check = StuffModel::firstWhere('kode_barang', $id);
+    	if ($stuff_check) {
+    		StuffModel::destroy($id);
+    		return response([
+    			'status' => 'OK',
+    			'message' => 'Data berhasil dihapus', 200);
+    	} else {
+    		return response([
+    			'status' => 'Data not found',
+    			'message' => 'Kode tidak ditemukan'], 404);
+    	}
+    }
+ ```
+ Kemudian tambahkan url. Buka folder routes->api.php lalu tambahkan kode berikut
+```
+Route::put('stuff/update/{kode_barang}','StuffController@update_data_stuff');
+```
+
+Terakhir, untuk menguji fungsi tersebut, kita perlu menggunakan Postman.
+
+Buka postman, lalu pilih DELETE dan pastekan url berikut
+```
+http://127.0.0.1:8000/api/stuff/delete/1
+```
