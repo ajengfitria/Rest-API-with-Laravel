@@ -45,4 +45,19 @@ class StuffController extends Controller
     			'message' => 'Kode tidak ditemukan'], 404);
     	}
     }
+
+    //function to delete data
+    public function delete_data_stuff($id) {
+    	$stuff_check = StuffModel::firstWhere('kode_barang', $id);
+    	if ($stuff_check) {
+    		StuffModel::destroy($id);
+    		return response([
+    			'status' => 'OK',
+    			'message' => 'Data berhasil dihapus', 200);
+    	} else {
+    		return response([
+    			'status' => 'Data not found',
+    			'message' => 'Kode tidak ditemukan'], 404);
+    	}
+    }
 }
