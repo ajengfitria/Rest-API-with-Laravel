@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('stuff','StuffController@get_all_stuff');
 
 Route::post('stuff/add','StuffController@insert_data_stuff');
+
+Route::put('stuff/update/{kode_barang}','StuffController@update_data_stuff');
